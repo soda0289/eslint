@@ -2255,14 +2255,6 @@ ruleTester.run("indent", rule, {
         },
         {
             code: unIndent`
-                foo(
-                                        bar, baz,
-                                        qux);
-            `,
-            options: [2, { CallExpression: { arguments: "first" } }]
-        },
-        {
-            code: unIndent`
                 foo(bar,
                         1 + 2,
                         !baz,
@@ -2822,10 +2814,10 @@ ruleTester.run("indent", rule, {
             // https://github.com/eslint/eslint/issues/7616
             code: unIndent`
                 foo(
-                        bar,
-                        {
-                            baz: 1
-                        }
+                    bar,
+                    {
+                        baz: 1
+                    }
                 )
             `,
             options: [4, { CallExpression: { arguments: "first" } }]
@@ -4676,13 +4668,13 @@ ruleTester.run("indent", rule, {
             `,
             output: unIndent`
                 function foo(
-                aaa,
-                bbb) {
+                  aaa,
+                  bbb) {
                     bar();
                 }
             `,
             options: [2, { FunctionDeclaration: { parameters: "first", body: 2 } }],
-            errors: expectedErrors([[3, 0, 4, "Identifier"], [4, 4, 0, "Identifier"]])
+            errors: expectedErrors([[2, 2, 0, "Identifier"], [3, 2, 4, "Identifier"], [4, 4, 0, "Identifier"]])
         },
         {
             code: unIndent`
@@ -4750,13 +4742,13 @@ ruleTester.run("indent", rule, {
             `,
             output: unIndent`
                 var foo = function(
-                aaa, bbb, ccc,
-                ddd, eee) {
+                  aaa, bbb, ccc,
+                  ddd, eee) {
                       bar();
                 }
             `,
             options: [2, { FunctionExpression: { parameters: "first", body: 3 } }],
-            errors: expectedErrors([[3, 0, 4, "Identifier"], [4, 6, 2, "Identifier"]])
+            errors: expectedErrors([[2, 2, 0, "Identifier"], [3, 2, 4, "Identifier"], [4, 6, 2, "Identifier"]])
         },
         {
             code: unIndent`
@@ -5085,11 +5077,11 @@ ruleTester.run("indent", rule, {
             `,
             output: unIndent`
                 foo(
-                          bar,
-                          baz);
+                  bar,
+                  baz);
             `,
             options: [2, { CallExpression: { arguments: "first" } }],
-            errors: expectedErrors([3, 10, 4, "Identifier"])
+            errors: expectedErrors([[2, 2, 10, "Identifier"], [3, 2, 4, "Identifier"]])
         },
         {
             code: unIndent`
@@ -5824,14 +5816,14 @@ ruleTester.run("indent", rule, {
             `,
             output: unIndent`
                 foo(
-                        bar,
-                        {
-                            baz: 1
-                        }
+                    bar,
+                    {
+                        baz: 1
+                    }
                 )
             `,
             options: [4, { CallExpression: { arguments: "first" } }],
-            errors: expectedErrors([[3, 8, 4, "Punctuator"], [4, 12, 8, "Identifier"], [5, 8, 4, "Punctuator"]])
+            errors: expectedErrors([[2, 4, 8, "Identifier"]])
         },
         {
             code: "  new Foo",
@@ -6092,8 +6084,43 @@ ruleTester.run("indent", rule, {
                     bar
                     ];
             `,
+            output: unIndent`
+                foo[
+                    bar
+                ];
+            `,
             options: [4, { MemberExpression: 1 }],
             errors: expectedErrors([3, 0, 4, "Punctuator"])
+        },
+        {
+            code: unIndent`
+                foo({
+                bar: 1,
+                baz: 2
+                })
+            `,
+            output: unIndent`
+                foo({
+                    bar: 1,
+                    baz: 2
+                })
+            `,
+            options: [4, { ObjectExpression: "first" }],
+            errors: expectedErrors([[2, 4, 0, "Identifier"], [3, 4, 0, "Identifier"]])
+        },
+        {
+            code: unIndent`
+                foo(
+                                        bar, baz,
+                                        qux);
+            `,
+            output: unIndent`
+                foo(
+                  bar, baz,
+                  qux);
+            `,
+            options: [2, { CallExpression: { arguments: "first" } }],
+            errors: expectedErrors([[2, 2, 24, "Identifier"], [3, 2, 24, "Identifier"]])
         }
     ]
 });
