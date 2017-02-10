@@ -1160,7 +1160,7 @@ ruleTester.run("indent", rule, {
                 };
             `,
             parserOptions: { sourceType: "module" },
-            options: [2]
+            options: [2, { FunctionDeclaration: { parameters: "first" } }]
         },
         {
             code: unIndent`
@@ -1172,7 +1172,7 @@ ruleTester.run("indent", rule, {
                 }
             `,
             parserOptions: { sourceType: "module" },
-            options: [2]
+            options: [2, { FunctionDeclaration: { parameters: "first" } }]
         },
         {
             code: unIndent`
@@ -1720,12 +1720,12 @@ ruleTester.run("indent", rule, {
         {
             code: unIndent`
                 MemberExpression
-                .is
-                  .off
-                    .by
-                 .default();
+                .can
+                  .be
+                    .turned
+                 .off();
             `,
-            options: [4]
+            options: [4, { MemberExpression: "off" }]
         },
         {
             code: unIndent`
@@ -1852,7 +1852,7 @@ ruleTester.run("indent", rule, {
                       }
                 );
             `,
-            options: [2, { FunctionExpression: { body: 3 } }]
+            options: [2, { FunctionExpression: { body: 3 }, CallExpression: { arguments: 3 } }]
         },
         {
             code: unIndent`
@@ -3124,7 +3124,7 @@ ruleTester.run("indent", rule, {
         {
             code: fixture,
             output: fixedFixture,
-            options: [2, { SwitchCase: 1, MemberExpression: 1 }],
+            options: [2, { SwitchCase: 1, MemberExpression: 1, CallExpression: { arguments: "off" } }],
             errors: expectedErrors([
                 [5, 2, 4, "Keyword"],
                 [6, 2, 0, "Line"],
@@ -3158,6 +3158,7 @@ ruleTester.run("indent", rule, {
                 [175, 2, 0, "Identifier"],
                 [177, 2, 4, "Identifier"],
                 [189, 2, 0, "Keyword"],
+                [192, 6, 18, "Identifier"],
                 [193, 6, 4, "Identifier"],
                 [195, 6, 8, "Identifier"],
                 [228, 5, 4, "Identifier"],
@@ -4867,7 +4868,7 @@ ruleTester.run("indent", rule, {
                       }
                 );
             `,
-            options: [2, { FunctionExpression: { body: 3 } }],
+            options: [2, { FunctionExpression: { body: 3 }, CallExpression: { arguments: 3 } }],
             errors: expectedErrors([3, 12, 8, "Identifier"])
         },
         {

@@ -189,7 +189,7 @@ if ( a
 var x; // ->
   var c,
     d = function(a,
-                  b) {
+                  b) { // <-
     a; // ->
       b;
         c; // <-
