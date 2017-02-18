@@ -56,7 +56,7 @@ ruleTester.run("arrow-body-style", rule, {
         },
         {
             code: "var foo = () => ({});",
-            output: "var foo = () => {return ({})};",
+            output: "var foo = () => {return {}};",
             options: ["always"],
             errors: [
                 { line: 1, column: 18, type: "ArrowFunctionExpression", message: "Expected block statement surrounding arrow body." }
@@ -160,7 +160,7 @@ ruleTester.run("arrow-body-style", rule, {
         },
         {
             code: "var foo = () => ({});",
-            output: "var foo = () => {return ({})};",
+            output: "var foo = () => {return {}};",
             options: ["as-needed", { requireReturnForObjectLiteral: true }],
             errors: [
                 { line: 1, column: 18, type: "ArrowFunctionExpression", message: "Expected block statement surrounding arrow body." }
@@ -168,7 +168,7 @@ ruleTester.run("arrow-body-style", rule, {
         },
         {
             code: "var foo = () => ({ bar: 0 });",
-            output: "var foo = () => {return ({ bar: 0 })};",
+            output: "var foo = () => {return { bar: 0 }};",
             options: ["as-needed", { requireReturnForObjectLiteral: true }],
             errors: [
                 { line: 1, column: 18, type: "ArrowFunctionExpression", message: "Expected block statement surrounding arrow body." }

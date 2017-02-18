@@ -1066,4 +1066,16 @@ describe("TokenStore", () => {
 
     });
 
+    describe("when calling commentsExistBetween", () => {
+
+        it("should retrieve false if comments don't exist", () => {
+            assert.isFalse(store.commentsExistBetween(AST.tokens[0], AST.tokens[1]));
+        });
+
+        it("should retrieve true if comments exist", () => {
+            assert.isTrue(store.commentsExistBetween(AST.tokens[1], AST.tokens[2]));
+        });
+
+    });
+
 });
