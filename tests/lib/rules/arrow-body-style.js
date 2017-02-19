@@ -294,6 +294,18 @@ ruleTester.run("arrow-body-style", rule, {
             errors: [
                 { line: 2, column: 31, type: "ArrowFunctionExpression", message: "Unexpected block statement surrounding arrow body." }
             ]
+        },
+        {
+            code: "var foo = () => ({foo: 1}).foo();",
+            output: "var foo = () => {return {foo: 1}.foo()};",
+            options: ["always"],
+            errors: ["Expected block statement surrounding arrow body."]
+        },
+        {
+            code: "var foo = () => ({foo: 1}.foo());",
+            output: "var foo = () => {return {foo: 1}.foo()};",
+            options: ["always"],
+            errors: ["Expected block statement surrounding arrow body."]
         }
     ]
 });
